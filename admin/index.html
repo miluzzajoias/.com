@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>Painel | Miluzza Joias</title>
+
+  <link
+    rel="stylesheet"
+    href="../assets/css/style.css"
+  >
+
+  <link
+    rel="stylesheet"
+    href="assets/css/admin.css"
+  >
+
+</head>
+
+
+<body class="admin">
+
+  <!-- ======================================================
+       BLOQUEIO INICIAL
+       ====================================================== -->
+
+  <div
+    id="authLoading"
+    style="
+      position:fixed;
+      inset:0;
+      z-index:99999;
+      background:#fbf8f3;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      gap:12px;
+    "
+  >
+
+    <strong>
+      Miluzza Joias
+    </strong>
+
+    <span>
+      Verificando acesso...
+    </span>
+
+  </div>
+
+
+  <!-- ======================================================
+       PAINEL
+       ====================================================== -->
+
+  <div id="adminContent" style="display:none;">
+
+    <header>
+
+      <img
+        src="https://miluzza-joias-ca518.web.app/assets/images/logo-transparent.png"
+        alt="Miluzza Joias"
+      >
+
+      <div>
+
+        <a
+          href="../index.html"
+          target="_blank"
+        >
+          Ver loja ↗
+        </a>
+
+        <button id="logout">
+          Sair
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <main>
+
+      <span>
+        PAINEL MILUZZA
+      </span>
+
+      <h1>
+        Sua vitrine.
+      </h1>
+
+
+      <!-- ==================================================
+           NOVO PRODUTO
+           ================================================== -->
+
+      <section>
+
+        <small>
+          NOVA PEÇA
+        </small>
+
+        <h2>
+          Cadastrar produto
+        </h2>
+
+
+        <form id="pf">
+
+          <label>
+
+            Nome
+
+            <input
+              id="name"
+              required
+              placeholder="Ex.: Brinco Aura"
+            >
+
+          </label>
+
+
+          <label>
+
+            Código do produto
+
+            <input
+              id="code"
+              required
+              maxlength="30"
+              placeholder="Ex.: MLZ-001"
+            >
+
+          </label>
+
+
+          <div class="row">
+
+            <label>
+
+              Categoria
+
+              <input
+                id="cat"
+                required
+                placeholder="Ex.: Brincos"
+              >
+
+            </label>
+
+
+            <label>
+
+              Preço
+
+              <input
+                id="price"
+                placeholder="Ex.: R$ 149,90"
+              >
+
+            </label>
+
+          </div>
+
+
+          <label>
+
+            Descrição
+
+            <textarea
+              id="desc"
+              rows="4"
+            ></textarea>
+
+          </label>
+
+
+          <label>
+
+            Imagem
+
+            <input
+              id="file"
+              type="file"
+              accept="image/*"
+            >
+
+          </label>
+
+
+          <div id="preview">
+            Prévia da imagem
+          </div>
+
+
+          <label class="check">
+
+            <input
+              id="featured"
+              type="checkbox"
+            >
+
+            Destacar na vitrine
+
+          </label>
+
+
+          <button
+            id="save"
+            type="submit"
+          >
+            Salvar peça
+          </button>
+
+
+          <div id="msg"></div>
+
+        </form>
+
+      </section>
+
+
+      <!-- ==================================================
+           CATÁLOGO
+           ================================================== -->
+
+      <section>
+
+        <small>
+          CATÁLOGO
+        </small>
+
+        <h2>
+          Peças cadastradas
+        </h2>
+
+        <div id="list"></div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+
+  <!-- ======================================================
+       AUTENTICAÇÃO
+       ====================================================== -->
+
+  <script type="module">
+
+    import {
+      auth,
+      onAuthStateChanged
+    } from "../assets/js/firebase.js";
+
+
+    const loading =
+      document.getElementById(
+        "authLoading"
+      );
+
+
+    const content =
+      document.getElementById(
+        "adminContent"
+      );
+
+
+    onAuthStateChanged(
+      auth,
+      (user) => {
+
+        console.log(
+          "Verificação de autenticação:",
+          user
+        );
+
+
+        if (!user) {
+
+          window.location.replace(
+            "login.html"
+          );
+
+          return;
+
+        }
+
+
+        /*
+         * Usuário autenticado.
+         * Agora o painel pode aparecer.
+         */
+
+        loading.style.display =
+          "none";
+
+        content.style.display =
+          "block";
+
+
+        /*
+         * Carrega o JavaScript administrativo
+         * somente depois da autenticação.
+         */
+
+        const script =
+          document.createElement(
+            "script"
+          );
+
+
+        script.type =
+          "module";
+
+        script.src =
+          "assets/js/admin.js";
+
+
+        document.body.appendChild(
+          script
+        );
+
+      }
+    );
+
+  </script>
+
+</body>
+
+</html>

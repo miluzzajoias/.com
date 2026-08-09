@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Acesso | Miluzza Joias</title>
+
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/admin.css">
+</head>
+
+<body class="loginPage">
+
+    <section>
+
+        <img
+            src="https://miluzza-joias-ca518.web.app/assets/images/logo-transparent.png"
+            alt="Miluzza Joias"
+        >
+
+        <small>ÁREA EXCLUSIVA</small>
+
+        <h1>Bem-vinda.</h1>
+
+        <p>Entre para administrar sua vitrine.</p>
+
+        <form id="loginForm">
+
+            <label>
+                E-mail
+
+                <input
+                    id="email"
+                    type="email"
+                    autocomplete="email"
+                    required
+                >
+            </label>
+
+
+            <label>
+                Senha
+
+                <input
+                    id="pass"
+                    type="password"
+                    autocomplete="current-password"
+                    required
+                >
+            </label>
+
+
+            <button
+                id="btn"
+                type="submit"
+            >
+                Entrar no painel
+            </button>
+
+
+            <div
+                id="err"
+                role="alert"
+                aria-live="polite"
+            ></div>
+
+        </form>
+
+
+        <a href="../index.html">
+            ← Voltar para a loja
+        </a>
+
+    </section>
+
+
+    <script type="module">
+
+        import {
+            auth,
+            signInWithEmailAndPassword,
+            onAuthStateChanged
+        } from "../assets/js/firebase.js";
+
+
+        const form = document.getElementById("loginForm");
+        const button = document.getElementById("btn");
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("pass");
+        const errorMessage = document.getElementById("err");
+
+
+        // =====================================================
+        // VERIFICAR SE JÁ ESTÁ AUTENTICADA
+        // =====================================================
+
+        onAuthStateChanged(auth, (user) => {
+
+            if (user) {
+
+                window.location.href = "index.html";
+
+            }
+
+        });
+
+
+        // =====================================================
+        // LOGIN
+        // =====================================================
+
+        form.addEventListener("submit", async (event) => {
+
+            event.preventDefault();
+
+            errorMessage.textContent = "";
+
+            button.disabled = true;
+            button.textContent = "Entrando...";
+
+
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+
+
+            try {
+
+                await signInWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+
+
+                console.log(
+                    "Login realizado com sucesso."
+                );
+
+
+                window.location.href = "index.html";
+
+
+            } catch (error) {
+
+                console.error(
+                    "Erro no login:",
+                    error
+                );
+
+
+                if (
+                    error.code ===
+                    "auth/invalid-credential"
+                ) {
+
+                    errorMessage.textContent =
+                        "E-mail ou senha inválidos.";
+
+                } else if (
+                    error.code ===
+                    "auth/invalid-email"
+                ) {
+
+                    errorMessage.textContent =
+                        "Digite um e-mail válido.";
+
+                } else if (
+                    error.code ===
+                    "auth/too-many-requests"
+                ) {
+
+                    errorMessage.textContent =
+                        "Muitas tentativas. Tente novamente mais tarde.";
+
+                } else {
+
+                    errorMessage.textContent =
+                        "Não foi possível entrar. Verifique sua conexão e tente novamente.";
+
+                }
+
+
+                button.disabled = false;
+                button.textContent =
+                    "Entrar no painel";
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
