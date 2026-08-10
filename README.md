@@ -1,29 +1,34 @@
-# Miluzza Joias
+# Miluzza Joias — versão revisada
 
-Site mobile-first pronto para publicar, com vitrine elegante, categorias, busca, página individual de produto, login administrativo após 5 cliques na logo, Firebase Authentication + Firestore e Cloudinary.
+## O que foi incluído
+- Catálogo conectado à coleção Firestore `produtos`.
+- Página individual de produto corrigida.
+- Carrinho persistente no navegador.
+- Controle de quantidade e remoção de itens.
+- Checkout que monta o pedido e abre o WhatsApp da Miluzza.
+- Cadastro, edição, status, destaque e exclusão de produtos no painel.
+- Upload Cloudinary com validação de JPG/PNG/WEBP e limite de 5 MB.
+- Logo local para reduzir dependências externas.
+- Busca por nome, categoria, código e descrição.
+- Categorias dinâmicas.
+- Regras Firestore alinhadas à coleção real e ao e-mail administrativo configurado.
+- SEO/meta básicos e favicon.
 
-## Configuração final (obrigatória)
+## Dados já mantidos
+Firebase e Cloudinary foram preservados conforme o arquivo original fornecido.
+WhatsApp: +55 63 98500-3751
+E-mail de contato: miluzzajoias@gmail.com
 
-Você não precisa apagar, instalar ou criar arquivos. Apenas preencha suas credenciais nos dois arquivos indicados:
+## Atenção antes de publicar
+A regra do Firestore autoriza escrita somente ao e-mail `miluzzajoias@gmail.com`.
+Se a conta usada no Firebase Authentication para entrar no painel tiver outro e-mail, altere esse endereço em:
+- `firebase/firestore.rules`
+- `assets/js/admin.js` (const ADMIN_EMAIL)
 
-### Firebase
-`assets/js/firebase.js`
+Depois publique novamente as regras do Firestore.
 
-Substitua os 6 valores `COLE_AQUI` pela configuração do Web App do seu Firebase.
+## Cloudinary
+O preset usado continua sendo `miluzza_produtos`. Para produção, configure no Cloudinary o preset como unsigned apenas se essa for a estratégia desejada e aplique restrições de formato/tamanho/pasta compatíveis com a loja.
 
-No Firebase: ative Authentication > Email/Password, crie o usuário da proprietária e crie o Firestore. Publique também `firebase/firestore.rules`.
-
-### Cloudinary
-`assets/js/cloudinary.js`
-
-Preencha `CLOUD_NAME` e `UPLOAD_PRESET`. O Upload Preset deve ser `Unsigned`.
-
-## Uso
-
-Na loja, 5 cliques rápidos na logo abrem o login. O painel exige autenticação Firebase. Ao cadastrar uma peça, a imagem vai para o Cloudinary e os dados vão para a coleção `products` no Firestore. Clicar na peça abre `produto.html` com seus detalhes e botão de WhatsApp.
-
-Contatos já configurados:
-WhatsApp +55 63 98500-3751
-miluzzajoias@gmail.com
-
-As cores utilizadas são #4a0628, #650b36, #2c0318, #e9c778, #f5dda0 e #fbf8f3.
+## Publicação
+O projeto é uma aplicação estática e pode continuar sendo hospedado no Firebase Hosting. Publique os arquivos deste diretório e as regras do Firestore.

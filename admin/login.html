@@ -1,197 +1,342 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-    <title>Acesso | Miluzza Joias</title>
+  <title>Login | Miluzza Joias</title>
 
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/admin.css">
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #4a0628;
+      color: #3b3030;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      background: #fbf8f3;
+      padding: 45px 32px;
+      box-shadow: 0 25px 80px rgba(0,0,0,.22);
+    }
+
+    .logo {
+      width: 170px;
+      height: auto;
+      display: block;
+      margin: 0 auto 30px;
+    }
+
+    .eyebrow {
+      text-align: center;
+      color: #a88a58;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .18em;
+    }
+
+    h1 {
+      margin: 12px 0 8px;
+      text-align: center;
+      color: #4a0628;
+      font: 500 42px/1 Georgia, serif;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #756b68;
+      font-size: 12px;
+      margin: 0 0 28px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 16px;
+      color: #4a0628;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    input {
+      width: 100%;
+      display: block;
+      margin-top: 7px;
+      padding: 14px;
+      border: 1px solid #d9cdc5;
+      background: #fff;
+      outline: none;
+      font-size: 13px;
+    }
+
+    input:focus {
+      border-color: #a88a58;
+      box-shadow: 0 0 0 2px rgba(168,138,88,.12);
+    }
+
+    button {
+      width: 100%;
+      border: 0;
+      background: #4a0628;
+      color: white;
+      padding: 15px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+
+    button:disabled {
+      opacity: .55;
+      cursor: wait;
+    }
+
+    #error {
+      min-height: 20px;
+      margin-top: 13px;
+      color: #a21d4e;
+      text-align: center;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .back {
+      display: block;
+      margin-top: 24px;
+      text-align: center;
+      color: #4a0628;
+      font-size: 11px;
+      text-decoration: none;
+    }
+
+  </style>
 </head>
 
-<body class="loginPage">
+<body>
 
-    <section>
+  <main class="login-card">
 
-        <img
-            src="https://miluzza-joias-ca518.web.app/assets/images/logo-transparent.png"
-            alt="Miluzza Joias"
+    <img
+      class="logo"
+      src="../logo-local.svg"
+      alt="Miluzza Joias"
+    >
+
+    <div class="eyebrow">
+      ÁREA ADMINISTRATIVA
+    </div>
+
+    <h1>Bem-vinda.</h1>
+
+    <p class="subtitle">
+      Entre para administrar sua loja.
+    </p>
+
+    <form id="loginForm">
+
+      <label>
+        E-mail
+
+        <input
+          id="email"
+          type="email"
+          autocomplete="username"
+          required
         >
+      </label>
 
-        <small>ÁREA EXCLUSIVA</small>
+      <label>
+        Senha
 
-        <h1>Bem-vinda.</h1>
+        <input
+          id="password"
+          type="password"
+          autocomplete="current-password"
+          required
+        >
+      </label>
 
-        <p>Entre para administrar sua vitrine.</p>
+      <button
+        id="loginButton"
+        type="submit"
+      >
+        Entrar no painel
+      </button>
 
-        <form id="loginForm">
+      <div id="error"></div>
 
-            <label>
-                E-mail
+    </form>
 
-                <input
-                    id="email"
-                    type="email"
-                    autocomplete="email"
-                    required
-                >
-            </label>
+    <a
+      class="back"
+      href="../index.html"
+    >
+      ← Voltar para a loja
+    </a>
 
-
-            <label>
-                Senha
-
-                <input
-                    id="pass"
-                    type="password"
-                    autocomplete="current-password"
-                    required
-                >
-            </label>
-
-
-            <button
-                id="btn"
-                type="submit"
-            >
-                Entrar no painel
-            </button>
+  </main>
 
 
-            <div
-                id="err"
-                role="alert"
-                aria-live="polite"
-            ></div>
+  <script type="module">
 
-        </form>
-
-
-        <a href="../index.html">
-            ← Voltar para a loja
-        </a>
-
-    </section>
+    import {
+      auth,
+      signInWithEmailAndPassword,
+      signOut
+    } from "../assets/js/firebase.js";
 
 
-    <script type="module">
-
-        import {
-            auth,
-            signInWithEmailAndPassword,
-            onAuthStateChanged
-        } from "../assets/js/firebase.js";
+    const ADMIN_EMAIL =
+      "miluzzajoias@gmail.com";
 
 
-        const form = document.getElementById("loginForm");
-        const button = document.getElementById("btn");
-        const emailInput = document.getElementById("email");
-        const passwordInput = document.getElementById("pass");
-        const errorMessage = document.getElementById("err");
+    const form =
+      document.querySelector("#loginForm");
+
+    const email =
+      document.querySelector("#email");
+
+    const password =
+      document.querySelector("#password");
+
+    const button =
+      document.querySelector("#loginButton");
+
+    const error =
+      document.querySelector("#error");
 
 
-        // =====================================================
-        // VERIFICAR SE JÁ ESTÁ AUTENTICADA
-        // =====================================================
+    form.addEventListener(
+      "submit",
+      async event => {
 
-        onAuthStateChanged(auth, (user) => {
+        event.preventDefault();
 
-            if (user) {
+        error.textContent = "";
 
-                window.location.href = "index.html";
+        button.disabled = true;
 
-            }
-
-        });
-
-
-        // =====================================================
-        // LOGIN
-        // =====================================================
-
-        form.addEventListener("submit", async (event) => {
-
-            event.preventDefault();
-
-            errorMessage.textContent = "";
-
-            button.disabled = true;
-            button.textContent = "Entrando...";
+        button.textContent =
+          "Verificando...";
 
 
-            const email = emailInput.value.trim();
-            const password = passwordInput.value;
+        try {
+
+          const credential =
+            await signInWithEmailAndPassword(
+              auth,
+              email.value.trim(),
+              password.value
+            );
 
 
-            try {
-
-                await signInWithEmailAndPassword(
-                    auth,
-                    email,
-                    password
-                );
+          const user =
+            credential.user;
 
 
-                console.log(
-                    "Login realizado com sucesso."
-                );
+          if (
+            !user.email ||
+            user.email.toLowerCase() !==
+            ADMIN_EMAIL.toLowerCase()
+          ) {
+
+            await signOut(auth);
+
+            throw new Error(
+              "Esta conta não possui acesso administrativo."
+            );
+
+          }
 
 
-                window.location.href = "index.html";
+          /*
+           * O Firebase já confirmou a conta.
+           * Agora abrimos o painel.
+           */
+
+          window.location.replace(
+            "index.html"
+          );
+
+        }
+
+        catch (err) {
+
+          console.error(
+            "Erro no login:",
+            err
+          );
 
 
-            } catch (error) {
+          if (
+            err.code ===
+            "auth/invalid-credential"
+          ) {
 
-                console.error(
-                    "Erro no login:",
-                    error
-                );
+            error.textContent =
+              "E-mail ou senha inválidos.";
+
+          }
+
+          else if (
+            err.code ===
+            "auth/user-not-found"
+          ) {
+
+            error.textContent =
+              "Usuário não encontrado.";
+
+          }
+
+          else if (
+            err.code ===
+            "auth/wrong-password"
+          ) {
+
+            error.textContent =
+              "Senha incorreta.";
+
+          }
+
+          else {
+
+            error.textContent =
+              err.message ||
+              "Não foi possível entrar.";
+
+          }
 
 
-                if (
-                    error.code ===
-                    "auth/invalid-credential"
-                ) {
+          button.disabled = false;
 
-                    errorMessage.textContent =
-                        "E-mail ou senha inválidos.";
+          button.textContent =
+            "Entrar no painel";
 
-                } else if (
-                    error.code ===
-                    "auth/invalid-email"
-                ) {
+        }
 
-                    errorMessage.textContent =
-                        "Digite um e-mail válido.";
+      }
+    );
 
-                } else if (
-                    error.code ===
-                    "auth/too-many-requests"
-                ) {
-
-                    errorMessage.textContent =
-                        "Muitas tentativas. Tente novamente mais tarde.";
-
-                } else {
-
-                    errorMessage.textContent =
-                        "Não foi possível entrar. Verifique sua conexão e tente novamente.";
-
-                }
-
-
-                button.disabled = false;
-                button.textContent =
-                    "Entrar no painel";
-
-            }
-
-        });
-
-    </script>
+  </script>
 
 </body>
-
 </html>

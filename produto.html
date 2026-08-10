@@ -1,1 +1,1250 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#4a0628"><title>Produto | Miluzza Joias</title><link rel="stylesheet" href="assets/css/style.css"></head><body><header class="productHead"><a href="index.html">← Voltar</a><img src="https://miluzza-joias-ca518.web.app/assets/images/logo-transparent.png" alt="Miluzza Joias"><a href="https://wa.me/5563985003751">◔</a></header><main id="detail"></main><footer><img src="https://miluzza-joias-ca518.web.app/assets/images/logo-transparent.png" alt="Miluzza Joias"><small>© <span id="year"></span> Miluzza Joias</small></footer><script type="module" src="assets/js/product.js"></script></body></html>
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <meta
+    name="theme-color"
+    content="#4a0628"
+  >
+
+  <title>Produto | Miluzza Joias</title>
+
+  <link
+    rel="stylesheet"
+    href="assets/css/style.css"
+  >
+
+  <style>
+
+    .product-page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 20px 70px;
+    }
+
+    .product-back {
+      display: inline-block;
+      margin-bottom: 25px;
+      color: #4a0628;
+      text-decoration: none;
+      font-size: 12px;
+    }
+
+    .product-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr);
+      gap: 50px;
+      align-items: start;
+    }
+
+    .product-main-photo {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #f5f0ea;
+      overflow: hidden;
+    }
+
+    .product-main-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .product-thumbnails {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .product-thumb {
+      border: 1px solid #ddd4cc;
+      padding: 0;
+      aspect-ratio: 1 / 1;
+      background: #f5f0ea;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .product-thumb.active {
+      border: 2px solid #4a0628;
+    }
+
+    .product-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .product-category {
+      color: #a78958;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .16em;
+    }
+
+    .product-title {
+      margin: 10px 0;
+      color: #4a0628;
+      font-family: Georgia, serif;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 400;
+      line-height: 1.05;
+    }
+
+    .product-code {
+      color: #8d817b;
+      font-size: 11px;
+      margin-bottom: 25px;
+    }
+
+    .product-price {
+      color: #4a0628;
+      font-size: 25px;
+      font-weight: 600;
+    }
+
+    .product-old-price {
+      color: #9a8d86;
+      text-decoration: line-through;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .product-description {
+      margin: 28px 0;
+      padding: 25px 0;
+      border-top: 1px solid #e4dcd5;
+      border-bottom: 1px solid #e4dcd5;
+      color: #665c57;
+      font-size: 13px;
+      line-height: 1.8;
+      white-space: pre-line;
+    }
+
+    .product-specs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin-bottom: 25px;
+      border-top: 1px solid #e4dcd5;
+      border-left: 1px solid #e4dcd5;
+    }
+
+    .product-spec {
+      padding: 14px;
+      border-right: 1px solid #e4dcd5;
+      border-bottom: 1px solid #e4dcd5;
+    }
+
+    .product-spec small {
+      display: block;
+      margin-bottom: 5px;
+      color: #a78958;
+      font-size: 8px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+
+    .product-spec strong {
+      color: #4a0628;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .product-stock {
+      margin-bottom: 18px;
+      color: #4d765d;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .product-stock.unavailable {
+      color: #a3234f;
+    }
+
+    .product-actions {
+      display: grid;
+      gap: 10px;
+    }
+
+    .product-buy {
+      width: 100%;
+      padding: 17px;
+      border: 0;
+      background: #4a0628;
+      color: white;
+      cursor: pointer;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .product-cart {
+      width: 100%;
+      padding: 17px;
+      border: 1px solid #4a0628;
+      background: transparent;
+      color: #4a0628;
+      cursor: pointer;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .product-buy:disabled,
+    .product-cart:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+    }
+
+    [hidden] {
+  display: none !important;
+}
+        .product-loading,
+        .product-error {
+      min-height: 60vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      color: #4a0628;
+      padding: 30px;
+    }
+
+    .product-error h1 {
+      font-family: Georgia, serif;
+      font-weight: 400;
+      font-size: 42px;
+      margin-bottom: 15px;
+    }
+
+    .product-error p {
+      color: #776c67;
+      font-size: 13px;
+    }
+
+    .product-error a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 14px 22px;
+      background: #4a0628;
+      color: white;
+      text-decoration: none;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 800px) {
+
+      .product-layout {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .product-page {
+        padding: 20px 15px 50px;
+      }
+
+    }
+
+    @media (max-width: 500px) {
+
+      .product-thumbnails {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .product-specs {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+        /* =========================================================
+   MILUZZA — ESTÉTICA PREMIUM DA PÁGINA DO PRODUTO
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f8f4ef;
+  color: #4a0628;
+}
+
+
+/* =========================
+   CABEÇALHO
+========================= */
+
+.productHead {
+  width: 100%;
+  height: 78px;
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+
+  padding: 0 42px;
+
+  background: rgba(250, 247, 243, .97);
+  border-bottom: 1px solid #e9dfd7;
+
+  position: relative;
+  z-index: 10;
+}
+
+.productHead a {
+  color: #4a0628;
+  text-decoration: none;
+
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.productHead a:first-child {
+  justify-self: start;
+}
+
+.productHead a:last-child {
+  justify-self: end;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.productHead img {
+  width: 105px;
+  height: auto;
+  max-height: 55px;
+
+  object-fit: contain;
+  display: block;
+}
+
+.productHead [data-cart-count] {
+  width: 22px;
+  height: 22px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #eee5db;
+  color: #4a0628;
+
+  font-size: 9px;
+}
+
+
+/* =========================
+   PÁGINA
+========================= */
+
+.product-page {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+
+  padding: 55px 35px 90px;
+}
+
+
+/* =========================
+   PRODUTO
+========================= */
+
+.product-layout {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.08fr)
+    minmax(350px, .92fr);
+
+  gap: 70px;
+
+  align-items: start;
+}
+
+
+/* =========================
+   GALERIA
+========================= */
+
+.product-main-photo {
+  width: 100%;
+
+  aspect-ratio: 1 / 1;
+
+  background: #eee7df;
+
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-main-photo img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  display: block;
+
+  mix-blend-mode: multiply;
+}
+
+
+/* =========================
+   MINIATURAS
+========================= */
+
+.product-thumbnails {
+  display: flex;
+
+  gap: 12px;
+
+  margin-top: 14px;
+
+  overflow-x: auto;
+
+  padding-bottom: 4px;
+
+  scrollbar-width: none;
+}
+
+.product-thumbnails::-webkit-scrollbar {
+  display: none;
+}
+
+.product-thumb {
+  flex: 0 0 82px;
+
+  width: 82px;
+  height: 82px;
+
+  padding: 0;
+
+  background: #eee7df;
+
+  border: 1px solid #ded4cb;
+
+  overflow: hidden;
+
+  cursor: pointer;
+
+  transition:
+    border-color .2s ease,
+    transform .2s ease;
+}
+
+.product-thumb:hover {
+  transform: translateY(-2px);
+}
+
+.product-thumb.active {
+  border: 2px solid #4a0628;
+}
+
+.product-thumb img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+}
+
+
+/* =========================
+   INFORMAÇÕES
+========================= */
+
+.product-layout > div:last-child {
+  padding-top: 12px;
+}
+
+.product-category {
+  color: #ad8b55;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: .2em;
+
+  text-transform: uppercase;
+}
+
+.product-title {
+  margin: 13px 0 9px;
+
+  color: #4a0628;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(36px, 4vw, 54px);
+
+  line-height: 1.02;
+
+  font-weight: 400;
+
+  letter-spacing: -.02em;
+}
+
+.product-code {
+  color: #9b9089;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 10px;
+
+  letter-spacing: .08em;
+}
+
+
+/* =========================
+   PREÇO
+========================= */
+
+.product-price {
+  margin-top: 24px;
+
+  color: #4a0628;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 25px;
+
+  font-weight: 600;
+
+  letter-spacing: -.02em;
+}
+
+.product-old-price {
+  margin-top: 25px;
+  margin-bottom: -20px;
+
+  color: #a59a94;
+
+  font-size: 12px;
+}
+
+
+/* =========================
+   DESCRIÇÃO
+========================= */
+
+.product-description {
+  margin: 30px 0;
+
+  padding: 25px 0;
+
+  border-top: 1px solid #e5dcd4;
+  border-bottom: 1px solid #e5dcd4;
+
+  color: #6e635e;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 12px;
+
+  line-height: 1.9;
+}
+
+
+/* =========================
+   ESPECIFICAÇÕES
+========================= */
+
+.product-specs {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  margin-bottom: 25px;
+
+  border: 0;
+}
+
+.product-spec {
+  padding: 13px 0;
+
+  border: 0;
+
+  border-bottom: 1px solid #ebe3dc;
+}
+
+.product-spec:nth-child(odd) {
+  margin-right: 20px;
+}
+
+.product-spec small {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #aa8957;
+
+  font-size: 8px;
+  font-weight: 700;
+
+  letter-spacing: .15em;
+
+  text-transform: uppercase;
+}
+
+.product-spec strong {
+  color: #4a0628;
+
+  font-size: 11px;
+
+  font-weight: 500;
+}
+
+
+/* =========================
+   ESTOQUE
+========================= */
+
+.product-stock {
+  margin: 20px 0;
+
+  color: #58715d;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 10px;
+
+  letter-spacing: .08em;
+
+  text-transform: uppercase;
+}
+
+.product-stock.unavailable {
+  color: #a3234f;
+}
+
+
+/* =========================
+   BOTÕES
+========================= */
+
+.product-actions {
+  display: grid;
+
+  gap: 10px;
+
+  margin-top: 20px;
+}
+
+.product-buy,
+.product-cart {
+  width: 100%;
+
+  min-height: 52px;
+
+  padding: 16px 20px;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: .16em;
+
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition:
+    background .2s ease,
+    color .2s ease,
+    transform .2s ease;
+}
+
+.product-buy {
+  border: 1px solid #4a0628;
+
+  background: #4a0628;
+
+  color: #fff;
+}
+
+.product-buy:hover {
+  background: #641139;
+
+  transform: translateY(-1px);
+}
+
+.product-cart {
+  border: 1px solid #cbbcaf;
+
+  background: transparent;
+
+  color: #4a0628;
+}
+
+.product-cart:hover {
+  border-color: #4a0628;
+
+  background: #f1eae3;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================
+   VOLTAR
+========================= */
+
+.product-page > .product-back {
+  display: inline-flex;
+
+  margin-bottom: 30px;
+
+  color: #746963;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 9px;
+
+  font-weight: 600;
+
+  letter-spacing: .14em;
+
+  text-transform: uppercase;
+
+  text-decoration: none;
+}
+
+.product-page > .product-back:hover {
+  color: #4a0628;
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.product-loading {
+  min-height: 55vh;
+
+  display: grid;
+
+  place-items: center;
+
+  color: #4a0628;
+
+  font-family: Georgia, serif;
+
+  font-size: 18px;
+}
+
+
+/* =========================
+   RODAPÉ
+========================= */
+
+footer {
+  padding: 45px 20px;
+
+  border-top: 1px solid #e6ddd5;
+
+  background: #f3eee8;
+
+  text-align: center;
+}
+
+footer img {
+  width: 95px;
+
+  margin-bottom: 15px;
+
+  opacity: .85;
+}
+
+footer small {
+  display: block;
+
+  color: #968b84;
+
+  font-family: Arial, sans-serif;
+
+  font-size: 8px;
+
+  letter-spacing: .12em;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 800px) {
+
+  .productHead {
+    height: 68px;
+
+    padding: 0 18px;
+
+    grid-template-columns: 1fr auto 1fr;
+  }
+
+  .productHead img {
+    width: 88px;
+    max-height: 48px;
+  }
+
+  .productHead a {
+    font-size: 8px;
+  }
+
+  .product-page {
+    padding: 25px 18px 65px;
+  }
+
+  .product-layout {
+    grid-template-columns: 1fr;
+
+    gap: 35px;
+  }
+
+  .product-layout > div:last-child {
+    padding-top: 0;
+  }
+
+  .product-title {
+    font-size: 39px;
+  }
+
+  .product-main-photo {
+    aspect-ratio: 1 / 1;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE PEQUENO
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .productHead {
+    padding: 0 14px;
+  }
+
+  .productHead img {
+    width: 82px;
+  }
+
+  .productHead a:first-child {
+    font-size: 0;
+  }
+
+  .productHead a:first-child::before {
+    content: "←";
+    font-size: 20px;
+    font-weight: 300;
+  }
+
+  .productHead a:last-child {
+    font-size: 8px;
+  }
+
+  .product-page {
+    padding: 20px 14px 55px;
+  }
+
+  .product-title {
+    font-size: 36px;
+  }
+
+  .product-thumbnails {
+    gap: 8px;
+  }
+
+  .product-thumb {
+    flex-basis: 70px;
+
+    width: 70px;
+    height: 70px;
+  }
+
+  .product-specs {
+    grid-template-columns: 1fr;
+  }
+
+  .product-spec:nth-child(odd) {
+    margin-right: 0;
+  }
+
+}
+
+/* =========================================================
+   WHATSAPP FLUTUANTE — MILUZZA
+========================================================= */
+
+.whatsapp-float {
+  position: fixed;
+
+  right: 22px;
+  bottom: 22px;
+
+  width: 54px;
+  height: 54px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #4a0628;
+  color: #fff;
+
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 50%;
+
+  box-shadow:
+    0 8px 25px rgba(74, 6, 40, .25);
+
+  z-index: 9999;
+
+  text-decoration: none;
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease,
+    background .25s ease;
+}
+
+.whatsapp-float svg {
+  width: 25px;
+  height: 25px;
+
+  fill: currentColor;
+
+  display: block;
+}
+
+.whatsapp-float:hover {
+  background: #641139;
+
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 12px 30px rgba(74, 6, 40, .32);
+}
+
+.whatsapp-float:active {
+  transform: scale(.94);
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+  .whatsapp-float {
+    width: 50px;
+    height: 50px;
+
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .whatsapp-float svg {
+    width: 23px;
+    height: 23px;
+  }
+
+}
+
+  </style>
+
+</head>
+
+
+<!-- WhatsApp flutuante -->
+<a
+  class="whatsapp-float"
+  href="https://wa.me/5563985003751"
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Falar com a Miluzza pelo WhatsApp"
+>
+  <svg
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+  >
+    <path
+      d="M20.52 3.48A11.84 11.84 0 0 0 12.08 0C5.53 0 .2 5.33.2 11.88c0 2.09.55 4.13 1.59 5.93L.1 24l6.33-1.66a11.88 11.88 0 0 0 5.65 1.43h.01c6.55 0 11.88-5.33 11.88-11.88 0-3.17-1.23-6.15-3.45-8.41ZM12.09 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.76.99 1-3.67-.23-.38a9.86 9.86 0 1 1 8.39 4.65Zm5.42-7.39c-.3-.15-1.78-.88-2.05-.98-.27-.1-.47-.15-.67.15-.2.3-.77.98-.94 1.18-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.47-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.21 5.09 4.5.71.31 1.26.5 1.69.64.71.23 1.36.2 1.87.12.57-.08 1.78-.73 2.03-1.43.25-.7.25-1.3.17-1.43-.07-.13-.27-.2-.57-.35Z"
+    />
+  </svg>
+</a>
+
+<!-- WHATSAPP FLUTUANTE MILUZZA -->
+
+<a
+  id="whatsappFloat"
+  href="#"
+  aria-label="Falar com a Miluzza pelo WhatsApp"
+  style="
+    position: fixed !important;
+    right: 20px !important;
+    bottom: 20px !important;
+    width: 56px !important;
+    height: 56px !important;
+    min-width: 56px !important;
+    min-height: 56px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #4a0628 !important;
+    color: #ffffff !important;
+    border-radius: 50% !important;
+    border: 1px solid rgba(255,255,255,.35) !important;
+    box-shadow: 0 8px 25px rgba(74,6,40,.30) !important;
+    text-decoration: none !important;
+    z-index: 999999 !important;
+    cursor: pointer !important;
+  "
+>
+
+  <svg
+    viewBox="0 0 24 24"
+    width="26"
+    height="26"
+    fill="white"
+    aria-hidden="true"
+  >
+
+    <path
+      d="M20.52 3.48A11.84 11.84 0 0 0 12.08 0C5.53 0 .2 5.33.2 11.88c0 2.09.55 4.13 1.59 5.93L.1 24l6.33-1.66a11.88 11.88 0 0 0 5.65 1.43h.01c6.55 0 11.88-5.33 11.88-11.88 0-3.17-1.23-6.15-3.45-8.41ZM12.09 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.76.99 1-3.67-.23-.38a9.86 9.86 0 1 1 8.39 4.65Zm5.42-7.39c-.3-.15-1.78-.88-2.05-.98-.27-.1-.47-.15-.67.15-.2.3-.77.98-.94 1.18-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.47-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.21 5.09 4.5.71.31 1.26.5 1.69.64.71.23 1.36.2 1.87.12.57-.08 1.78-.73 2.03-1.43.25-.7.25-1.3.17-1.43-.07-.13-.27-.2-.57-.35Z"
+    />
+
+  </svg>
+
+</a>
+
+
+<script>
+
+  const whatsappFloat =
+    document.getElementById(
+      "whatsappFloat"
+    );
+
+  whatsappFloat.addEventListener(
+    "click",
+    function (event) {
+
+      event.preventDefault();
+
+      const phone =
+        "5563985003751";
+
+      const whatsappBase =
+        "https" + "://wa.me/";
+
+      const url =
+        whatsappBase +
+        phone;
+
+      window.open(
+        url,
+        "_blank",
+        "noopener,noreferrer"
+      );
+
+    }
+  );
+
+</script>
+
+<body>
+
+  <header class="productHead">
+
+    <a href="index.html">
+      ← Voltar
+    </a>
+
+    <img
+      src="https://miluzza-joias-ca518.web.app/assets/images/logo-transparent.png"
+      alt="Miluzza Joias"
+    >
+
+    <a href="cart.html">
+      SACOLA
+      <span data-cart-count>0</span>
+    </a>
+
+  </header>
+
+
+  <main class="product-page">
+
+    <div
+      id="loading"
+      class="product-loading"
+    >
+      Carregando produto...
+    </div>
+
+
+    <div
+      id="error"
+      class="product-error"
+      hidden
+    ></div>
+
+
+    <section
+      id="product"
+      class="product-layout"
+      hidden
+    >
+
+      <div>
+
+        <div
+          id="mainPhoto"
+          class="product-main-photo"
+        ></div>
+
+
+        <div
+          id="thumbnails"
+          class="product-thumbnails"
+        ></div>
+
+      </div>
+
+
+      <div>
+
+        <div
+          id="category"
+          class="product-category"
+        ></div>
+
+
+        <h1
+          id="name"
+          class="product-title"
+        ></h1>
+
+
+        <div
+          id="code"
+          class="product-code"
+        ></div>
+
+
+        <div
+          id="oldPrice"
+          class="product-old-price"
+          hidden
+        ></div>
+
+
+        <div
+          id="price"
+          class="product-price"
+        ></div>
+
+
+        <div
+          id="description"
+          class="product-description"
+        ></div>
+
+
+        <div
+          id="specs"
+          class="product-specs"
+        ></div>
+
+
+        <div
+          id="stock"
+          class="product-stock"
+        ></div>
+
+
+        <div class="product-actions">
+
+          <button
+            id="cartButton"
+            class="product-cart"
+            type="button"
+          >
+            Adicionar ao carrinho
+          </button>
+
+
+          <button
+            id="whatsappButton"
+            class="product-buy"
+            type="button"
+          >
+            Comprar pelo WhatsApp
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+
+    <img
+      src="https://miluzza-joias-ca518.web.app/assets/images/logo-transparent.png"
+      alt="Miluzza Joias"
+    >
+
+    <small>
+      © <span id="year"></span> Miluzza Joias
+    </small>
+
+  </footer>
+
+
+  <script
+    type="module"
+    src="assets/js/product.js"
+  ></script>
+
+</body>
+
+</html>

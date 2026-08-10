@@ -1,21 +1,16 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
 
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1"
+    content="width=device-width, initial-scale=1.0"
   >
 
   <title>Painel | Miluzza Joias</title>
-
-  <link
-    rel="stylesheet"
-    href="../assets/css/style.css"
-  >
 
   <link
     rel="stylesheet"
@@ -25,61 +20,67 @@
 </head>
 
 
-<body class="admin">
+<body>
 
-  <!-- ======================================================
-       BLOQUEIO INICIAL
-       ====================================================== -->
+  <!-- VERIFICAÇÃO -->
 
   <div
     id="authLoading"
-    style="
-      position:fixed;
-      inset:0;
-      z-index:99999;
-      background:#fbf8f3;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      flex-direction:column;
-      gap:12px;
-    "
+    class="auth-loading"
   >
 
-    <strong>
-      Miluzza Joias
-    </strong>
+    <div class="loading-box">
 
-    <span>
-      Verificando acesso...
-    </span>
+      <div class="spinner"></div>
+
+      <strong>
+        Verificando acesso...
+      </strong>
+
+      <span>
+        Aguarde um momento.
+      </span>
+
+    </div>
 
   </div>
 
 
-  <!-- ======================================================
-       PAINEL
-       ====================================================== -->
+  <!-- PAINEL -->
 
-  <div id="adminContent" style="display:none;">
+  <div
+    id="adminContent"
+    hidden
+  >
 
-    <header>
+    <header class="topbar">
 
-      <img
-        src="https://miluzza-joias-ca518.web.app/assets/images/logo-transparent.png"
-        alt="Miluzza Joias"
+      <a
+        class="brand"
+        href="../index.html"
       >
 
-      <div>
+        <img
+          src="../logo-local.svg"
+          alt="Miluzza Joias"
+        >
+
+      </a>
+
+
+      <div class="top-actions">
 
         <a
           href="../index.html"
           target="_blank"
         >
-          Ver loja ↗
+          Ver loja
         </a>
 
-        <button id="logout">
+        <button
+          id="logout"
+          type="button"
+        >
           Sair
         </button>
 
@@ -88,71 +89,92 @@
     </header>
 
 
-    <main>
+    <main class="container">
 
-      <span>
-        PAINEL MILUZZA
-      </span>
+      <!-- CABEÇALHO -->
 
-      <h1>
-        Sua vitrine.
-      </h1>
+      <section class="hero">
 
+        <div>
 
-      <!-- ==================================================
-           NOVO PRODUTO
-           ================================================== -->
+          <span>
+            PAINEL ADMINISTRATIVO
+          </span>
 
-      <section>
+          <h1>
+            Sua vitrine.
+          </h1>
 
-        <small>
-          NOVA PEÇA
-        </small>
+          <p>
+            Cadastre, edite e organize suas peças.
+          </p>
 
-        <h2>
-          Cadastrar produto
-        </h2>
+        </div>
 
 
-        <form id="pf">
+        <button
+          id="newProduct"
+          class="primary"
+          type="button"
+        >
+          + Nova peça
+        </button>
 
-          <label>
-
-            Nome
-
-            <input
-              id="name"
-              required
-              placeholder="Ex.: Brinco Aura"
-            >
-
-          </label>
+      </section>
 
 
-          <label>
+      <!-- FORMULÁRIO -->
 
-            Código do produto
+      <section class="card">
 
-            <input
-              id="code"
-              required
-              maxlength="30"
-              placeholder="Ex.: MLZ-001"
-            >
+        <div class="card-title">
 
-          </label>
+          <div>
+
+            <small id="formMode">
+              NOVA PEÇA
+            </small>
+
+            <h2 id="formTitle">
+              Cadastrar produto
+            </h2>
+
+          </div>
 
 
-          <div class="row">
+          <span
+            id="editingBadge"
+            class="badge"
+            hidden
+          >
+            EDITANDO
+          </span>
+
+        </div>
+
+
+        <form id="productForm">
+
+          <input
+            id="productId"
+            type="hidden"
+          >
+
+
+          <!-- NOME / CÓDIGO -->
+
+          <div class="grid two">
 
             <label>
 
-              Categoria
+              Nome do produto *
 
               <input
-                id="cat"
+                id="name"
+                type="text"
+                maxlength="120"
+                placeholder="Ex.: Brinco Aura"
                 required
-                placeholder="Ex.: Brincos"
               >
 
             </label>
@@ -160,11 +182,130 @@
 
             <label>
 
-              Preço
+              Código / SKU *
+
+              <input
+                id="code"
+                type="text"
+                maxlength="50"
+                placeholder="MLZ-001"
+                required
+              >
+
+            </label>
+
+          </div>
+
+
+          <!-- CATEGORIA -->
+
+          <div class="grid three">
+
+            <label>
+
+              Categoria *
+
+              <input
+                id="category"
+                type="text"
+                list="categories"
+                placeholder="Brincos"
+                required
+              >
+
+              <datalist
+                id="categories"
+              ></datalist>
+
+            </label>
+
+
+            <label>
+
+              Subcategoria
+
+              <input
+                id="subcategory"
+                type="text"
+                list="subcategories"
+                placeholder="Argolas"
+              >
+
+              <datalist
+                id="subcategories"
+              ></datalist>
+
+            </label>
+
+
+            <label>
+
+              Status
+
+              <select id="status">
+
+                <option value="Disponível">
+                  Disponível
+                </option>
+
+                <option value="Vendido">
+                  Vendido
+                </option>
+
+                <option value="Indisponível">
+                  Indisponível
+                </option>
+
+              </select>
+
+            </label>
+
+          </div>
+
+
+          <!-- PREÇOS -->
+
+          <div class="grid three">
+
+            <label>
+
+              Preço *
 
               <input
                 id="price"
-                placeholder="Ex.: R$ 149,90"
+                type="text"
+                inputmode="decimal"
+                placeholder="R$ 149,90"
+                required
+              >
+
+            </label>
+
+
+            <label>
+
+              Preço promocional
+
+              <input
+                id="salePrice"
+                type="text"
+                inputmode="decimal"
+                placeholder="R$ 129,90"
+              >
+
+            </label>
+
+
+            <label>
+
+              Estoque
+
+              <input
+                id="stock"
+                type="number"
+                min="0"
+                step="1"
+                value="1"
               >
 
             </label>
@@ -172,78 +313,283 @@
           </div>
 
 
-          <label>
+          <!-- DESCRIÇÃO -->
 
-            Descrição
+          <div class="field">
 
-            <textarea
-              id="desc"
-              rows="4"
-            ></textarea>
+            <label>
 
-          </label>
+              Descrição *
 
+              <textarea
+                id="description"
+                maxlength="3000"
+                placeholder="Descreva a peça para sua cliente..."
+                required
+              ></textarea>
 
-          <label>
-
-            Imagem
-
-            <input
-              id="file"
-              type="file"
-              accept="image/*"
-            >
-
-          </label>
+            </label>
 
 
-          <div id="preview">
-            Prévia da imagem
+            <div class="counter">
+
+              <span id="descriptionCounter">
+                0
+              </span>
+              / 3000
+
+            </div>
+
           </div>
 
 
-          <label class="check">
+          <!-- DETALHES -->
+
+          <div class="grid three">
+
+            <label>
+
+              Material
+
+              <input
+                id="material"
+                placeholder="Prata 925"
+              >
+
+            </label>
+
+
+            <label>
+
+              Banho / acabamento
+
+              <input
+                id="finish"
+                placeholder="Ouro 18k"
+              >
+
+            </label>
+
+
+            <label>
+
+              Garantia
+
+              <input
+                id="warranty"
+                placeholder="1 ano"
+              >
+
+            </label>
+
+          </div>
+
+
+          <!-- FOTOS -->
+
+          <section class="photos">
+
+            <div class="photos-heading">
+
+              <div>
+
+                <label>
+                  Fotos do produto *
+                </label>
+
+                <p>
+                  Adicione até 10 fotos.
+                  A primeira será a capa.
+                </p>
+
+              </div>
+
+
+              <strong id="photoCounter">
+                0 fotos
+              </strong>
+
+            </div>
+
+
+            <label
+              class="upload"
+              for="photos"
+            >
+
+              <span class="upload-plus">
+                +
+              </span>
+
+              <strong>
+                Adicionar fotos
+              </strong>
+
+              <small>
+                JPG, PNG ou WEBP · até 5 MB
+                por imagem
+              </small>
+
+            </label>
+
+
+            <input
+              id="photos"
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              multiple
+              hidden
+            >
+
+
+            <div
+              id="photoGrid"
+              class="photo-grid"
+            ></div>
+
+
+            <div
+              id="noPhotos"
+              class="no-photos"
+            >
+              Nenhuma foto adicionada.
+            </div>
+
+          </section>
+
+
+          <!-- DESTAQUE -->
+
+          <label class="featured">
 
             <input
               id="featured"
               type="checkbox"
             >
 
-            Destacar na vitrine
+            <span></span>
+
+            <div>
+
+              <strong>
+                Destacar produto
+              </strong>
+
+              <small>
+                Exibir como destaque na vitrine.
+              </small>
+
+            </div>
 
           </label>
 
 
-          <button
-            id="save"
-            type="submit"
-          >
-            Salvar peça
-          </button>
+          <!-- AÇÕES -->
+
+          <div class="form-actions">
+
+            <button
+              id="save"
+              class="primary"
+              type="submit"
+            >
+              Publicar produto
+            </button>
 
 
-          <div id="msg"></div>
+            <button
+              id="cancel"
+              class="secondary"
+              type="button"
+              hidden
+            >
+              Cancelar edição
+            </button>
+
+          </div>
+
+
+          <div
+            id="message"
+            class="message"
+          ></div>
 
         </form>
 
       </section>
 
 
-      <!-- ==================================================
-           CATÁLOGO
-           ================================================== -->
+      <!-- CATÁLOGO -->
 
-      <section>
+      <section class="card">
 
-        <small>
-          CATÁLOGO
-        </small>
+        <div class="card-title">
 
-        <h2>
-          Peças cadastradas
-        </h2>
+          <div>
 
-        <div id="list"></div>
+            <small>
+              CATÁLOGO
+            </small>
+
+            <h2>
+              Produtos cadastrados
+            </h2>
+
+          </div>
+
+
+          <strong
+            id="productCount"
+            class="count"
+          >
+            0 produtos
+          </strong>
+
+        </div>
+
+
+        <div class="toolbar">
+
+          <input
+            id="search"
+            type="search"
+            placeholder="Buscar por nome, código ou categoria..."
+          >
+
+
+          <select id="filter">
+
+            <option value="Todos">
+              Todos
+            </option>
+
+            <option value="Disponível">
+              Disponível
+            </option>
+
+            <option value="Vendido">
+              Vendido
+            </option>
+
+            <option value="Indisponível">
+              Indisponível
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div
+          id="products"
+          class="products"
+        >
+
+          <div class="empty">
+            Carregando produtos...
+          </div>
+
+        </div>
 
       </section>
 
@@ -252,89 +598,10 @@
   </div>
 
 
-  <!-- ======================================================
-       AUTENTICAÇÃO
-       ====================================================== -->
-
-  <script type="module">
-
-    import {
-      auth,
-      onAuthStateChanged
-    } from "../assets/js/firebase.js";
-
-
-    const loading =
-      document.getElementById(
-        "authLoading"
-      );
-
-
-    const content =
-      document.getElementById(
-        "adminContent"
-      );
-
-
-    onAuthStateChanged(
-      auth,
-      (user) => {
-
-        console.log(
-          "Verificação de autenticação:",
-          user
-        );
-
-
-        if (!user) {
-
-          window.location.replace(
-            "login.html"
-          );
-
-          return;
-
-        }
-
-
-        /*
-         * Usuário autenticado.
-         * Agora o painel pode aparecer.
-         */
-
-        loading.style.display =
-          "none";
-
-        content.style.display =
-          "block";
-
-
-        /*
-         * Carrega o JavaScript administrativo
-         * somente depois da autenticação.
-         */
-
-        const script =
-          document.createElement(
-            "script"
-          );
-
-
-        script.type =
-          "module";
-
-        script.src =
-          "assets/js/admin.js";
-
-
-        document.body.appendChild(
-          script
-        );
-
-      }
-    );
-
-  </script>
+  <script
+    type="module"
+    src="assets/js/admin.js"
+  ></script>
 
 </body>
 

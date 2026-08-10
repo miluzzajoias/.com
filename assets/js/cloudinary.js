@@ -1,126 +1,15 @@
-const CLOUD_NAME = "lxvtjllj";
-
-const UPLOAD_PRESET = "miluzza_produtos";
-
-
-// ============================================================
-// UPLOAD PARA O CLOUDINARY
-// ============================================================
-
-export async function uploadImage(file) {
-
-  if (!file) {
-    throw new Error(
-      "Nenhuma imagem foi selecionada."
-    );
-  }
-
-
-  if (!file.type.startsWith("image/")) {
-    throw new Error(
-      "O arquivo selecionado não é uma imagem."
-    );
-  }
-
-
-  const formData = new FormData();
-
-  formData.append(
-    "file",
-    file
-  );
-
-  formData.append(
-    "upload_preset",
-    UPLOAD_PRESET
-  );
-
-
-  const endpoint =
-    `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
-
-
-  console.log(
-    "Enviando imagem para Cloudinary..."
-  );
-
-  console.log(
-    "Cloud Name:",
-    CLOUD_NAME
-  );
-
-  console.log(
-    "Upload Preset:",
-    UPLOAD_PRESET
-  );
-
-
-  try {
-
-    const response =
-      await fetch(
-        endpoint,
-        {
-          method: "POST",
-          body: formData
-        }
-      );
-
-
-    const data =
-      await response.json();
-
-
-    console.log(
-      "Resposta do Cloudinary:",
-      data
-    );
-
-
-    if (!response.ok) {
-
-      throw new Error(
-        data?.error?.message ||
-        `Cloudinary retornou erro ${response.status}.`
-      );
-
-    }
-
-
-    if (!data.secure_url) {
-
-      throw new Error(
-        "O Cloudinary recebeu a imagem, mas não retornou uma URL."
-      );
-
-    }
-
-
-    console.log(
-      "Imagem enviada com sucesso:"
-    );
-
-    console.log(
-      data.secure_url
-    );
-
-
-    return data.secure_url;
-
-
-  } catch (error) {
-
-    console.error(
-      "ERRO NO CLOUDINARY:",
-      error
-    );
-
-
-    throw new Error(
-      error.message ||
-      "Não foi possível enviar a imagem para o Cloudinary."
-    );
-
-  }
-
+const CLOUD_NAME='lxvtjllj';
+const UPLOAD_PRESET='miluzza_produtos';
+const MAX_SIZE=5*1024*1024;
+const TYPES=['image/jpeg','image/png','image/webp'];
+export async function uploadImage(file){
+  if(!file) throw new Error('Selecione uma imagem.');
+  if(!TYPES.includes(file.type)) throw new Error('A imagem deve ser JPG, PNG ou WEBP.');
+  if(file.size>MAX_SIZE) throw new Error('A imagem deve ter no máximo 5 MB.');
+  const form=new FormData(); form.append('file',file); form.append('upload_preset',UPLOAD_PRESET); form.append('folder','miluzza/produtos');
+  const response=await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,{method:'POST',body:form});
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok) throw new Error(data?.error?.message||'Não foi possível enviar a imagem.');
+  if(!data.secure_url) throw new Error('O Cloudinary não retornou a URL da imagem.');
+  return data.secure_url;
 }
