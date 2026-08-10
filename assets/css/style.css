@@ -112,13 +112,13 @@
     min-width: 0;
   }
 
-  .hero-mark img {
+.hero-mark img {
   display: block;
-  width: 220px;
-  max-width: 62%;
+  width: 185px;
+  max-width: 52%;
   height: auto;
   margin: 0 auto;
   object-fit: contain;
+  opacity: 0.82;
 }
-
 }
