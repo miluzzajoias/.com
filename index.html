@@ -12,12 +12,81 @@
 <body>
 <header class="site-head"><a id="logo" href="#" aria-label="Miluzza Joias"><img src="logo-local.svg" alt="Miluzza Joias"></a><nav><button id="search" aria-label="Buscar">⌕</button><a class="cart-link" href="cart.html" aria-label="Carrinho">Sacola <span data-cart-count>0</span></a></nav></header>
 <main>
-<section class="hero"><div class="hero-copy"><span>MILUZZA JOIAS</span><h1>Elegância em<br><em>cada detalhe.</em></h1><p>Uma curadoria de semijoias para acompanhar seus momentos com beleza, delicadeza e presença.</p><a class="btn" href="#colecao">Conhecer coleção →</a></div><div class="hero-mark">MZ</div></section>
+<section class="hero"><div class="hero-copy"><span>MILUZZA JOIAS</span><h1>Elegância em<br><em>cada detalhe.</em></h1><p>Uma curadoria de semijoias para acompanhar seus momentos com beleza, delicadeza e presença.</p><a class="btn" href="#colecao">Conhecer coleção →</a></div>
+    <div class="hero-mark">
+  <img
+    src="assets/images/miluzza-iniciais.png"
+    alt="Símbolo Miluzza"
+  >
+</div>
+</section>
 <section class="cats"><small>CURADORIA</small><h2>Encontre seu brilho</h2><div id="cats"></div></section>
 <section id="colecao" class="collection"><div class="top"><div><small>COLEÇÃO MILUZZA</small><h2>Peças escolhidas<br>para você.</h2></div><b id="count"></b></div><div id="products" class="grid"></div></section>
 <section class="story"><small>O DETALHE FAZ TUDO</small><h2>Seu estilo.<br><em>Seu brilho.</em></h2><p>Cada peça é selecionada para acompanhar momentos especiais e deixar sua presença ainda mais marcante.</p><a href="https://wa.me/5563985003751" target="_blank" rel="noopener">Falar com a Miluzza ↗</a></section>
 </main>
-<footer><img src="logo-local.svg" alt="Miluzza Joias"><p>Elegância em cada detalhe.</p><div><a href="https://wa.me/5563985003751" target="_blank" rel="noopener">WhatsApp</a> · <a href="mailto:miluzzajoias@gmail.com">E-mail</a> · <a href="cart.html">Minha sacola</a></div><small>© <span id="year"></span> Miluzza Joias</small></footer>
+<footer class="site-footer">
+  <div class="footer-inner">
+
+    <img
+      src="logo-local.svg"
+      alt="Miluzza Joias"
+      class="footer-logo"
+    >
+
+    <p class="footer-tagline">
+      Elegância em cada detalhe.
+    </p>
+
+    <div class="footer-actions">
+
+      <a
+        href="https://wa.me/5563985003751"
+        class="footer-action"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Falar com a Miluzza pelo WhatsApp"
+      >
+        <span class="footer-icon">◔</span>
+        <span>WhatsApp</span>
+      </a>
+
+      <a
+        href="mailto:miluzzajoias@gmail.com"
+        class="footer-action"
+        aria-label="Enviar e-mail para a Miluzza"
+      >
+        <span class="footer-icon">✉</span>
+        <span>E-mail</span>
+      </a>
+
+      <a
+        href="https://instagram.com/miluzza_joias"
+        class="footer-action"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Instagram da Miluzza Joias"
+      >
+        <span class="footer-icon">◎</span>
+        <span>@miluzza_joias</span>
+      </a>
+
+      <a
+        href="cart.html"
+        class="footer-action"
+        aria-label="Abrir minha sacola"
+      >
+        <span class="footer-icon">♧</span>
+        <span>Minha sacola</span>
+      </a>
+
+    </div>
+
+    <small class="footer-copy">
+      © 2026 Miluzza Joias
+    </small>
+
+  </div>
+</footer>
 <div id="searchBox" role="dialog" aria-modal="true"><div class="search-panel"><button id="close" aria-label="Fechar">×</button><small>BUSCAR</small><h2>O que você procura?</h2><input id="q" placeholder="Brinco, colar, anel..."><div id="results"></div></div></div>
 <script type="module" src="assets/js/app.js"></script>
 </body></html>
